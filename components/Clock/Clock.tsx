@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Clock.module.scss";
 
 const Clock = () => {
   const today = new Date();
   const todayString = today.toLocaleDateString();
-  const [time, setTime] = useState(today.toLocaleTimeString());
+  const [time, setTime] = useState<string>();
 
   const getTime = () => {
     setInterval(() => {
@@ -14,7 +14,9 @@ const Clock = () => {
     }, 1000);
   };
 
-  getTime();
+  useEffect(() => {
+    getTime();
+  }, []);
 
   return (
     <div className={styles["clock-div"]}>

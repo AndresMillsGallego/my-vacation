@@ -1,10 +1,10 @@
 .form-div {
-  width: 50%;
+  width: 75%;
   margin: 2rem auto;
-}
-
-.fieldset {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+}
+
+.form-controls {
+  margin: 1rem;
 }
