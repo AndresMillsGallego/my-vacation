@@ -1,27 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Box,
   FormControl,
   FormLabel,
   MenuItem,
   TextField,
+  Button,
 } from "@mui/material";
 import Countdown from "../Countdown/Countdown";
 import styles from "./TripForm.module.scss";
 
+interface TripProps {
+  destination: string;
+  startDate: string;
+  endDate?: string;
+  tripType?: string;
+}
+
 const TripForm = () => {
-  const [destination, setDestination] = useState<string | undefined>();
-  const [startDate, setStartDate] = useState<string>();
-  const [endDate, setEndDate] = useState<string>();
-  const [tripType, setTripType] = useState<string>();
+  const [destination, setDestination] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [tripType, setTripType] = useState<string>("");
+
+  const [trip, setTrip] = useState<TripProps>();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trip: TripProps = {
+      destination,
+      startDate,
+      endDate,
+      tripType,
+    };
+    setTrip(trip);
+  };
 
   return (
-    <>
-      {startDate ? <Countdown startDate={startDate} /> : null}
+    <div className={styles[`${tripType}`]}>
+      {trip ? (
+        <Countdown startDate={trip.startDate} destination={trip.destination} />
+      ) : null}
       <div className={styles["form-div"]}>
-        <Box component="form" className={styles["form-div"]}>
+        <Box
+          component="form"
+          className={styles["form-div"]}
+          onSubmit={(event) => handleSubmit(event)}
+        >
           <FormLabel>Enter Trip Details</FormLabel>
 
           <FormControl className={styles["form-controls"]}>
@@ -61,15 +88,18 @@ const TripForm = () => {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setTripType(e.target.value)}
             >
-              <MenuItem value="Tropcial Paradise">Tropical Paradise</MenuItem>
-              <MenuItem value="Winter Wonderland">Winter Wonderland</MenuItem>
-              <MenuItem value="Urban Adventure">Urban Adventure</MenuItem>
-              <MenuItem value="Relaxing Retreat">Relaxing Retreat</MenuItem>
+              <MenuItem value="tropcial-paradise">Tropical Paradise</MenuItem>
+              <MenuItem value="winter-wonderland">Winter Wonderland</MenuItem>
+              <MenuItem value="urban-adventure">Urban Adventure</MenuItem>
+              <MenuItem value="relaxing-retreat">Relaxing Retreat</MenuItem>
             </TextField>
           </FormControl>
+          <Button type="submit" variant="contained">
+            Add Trip
+          </Button>
         </Box>
       </div>
-    </>
+    </div>
   );
 };
 

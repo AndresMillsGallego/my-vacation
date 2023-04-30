@@ -1,6 +1,9 @@
+import { adjustTimezone } from "./adjustTimezone";
+
 const calculateCountdown = (startDate: string) => {
   const todayString = new Date().toUTCString();
-  const tripStart = new Date(startDate).getTime();
+  const timeZoneDifference = adjustTimezone(new Date(startDate));
+  const tripStart = new Date(startDate).getTime() + timeZoneDifference;
   const today = new Date(todayString).getTime();
 
   const timeRemaining = tripStart - today;

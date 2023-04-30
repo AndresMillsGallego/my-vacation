@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
+import { adjustTimezone } from "@/utils/adjustTimezone";
 import styles from "./Countdown.module.scss";
 
 interface CountdownProps {
   startDate: string;
+  destination: string;
 }
 const Countdown = (props: CountdownProps) => {
   const [timeRemaining, setTimeRemaining] = useState<number>();
 
-  const { startDate } = props;
+  const { startDate, destination } = props;
   const daysUntil = timeRemaining
     ? Math.floor(timeRemaining / (1000 * 60 * 60 * 24))
     : "";
@@ -23,8 +25,10 @@ const Countdown = (props: CountdownProps) => {
     : "";
 
   const calculate = () => {
-    const today = new Date(new Date().toUTCString()).getTime();
-    const tripStart = new Date(startDate).getTime();
+    const today = new Date().getTime();
+    const timeZoneDifference = adjustTimezone(new Date(startDate));
+    const tripStart = new Date(startDate).getTime() + timeZoneDifference;
+
     return tripStart - today;
   };
 
@@ -34,12 +38,19 @@ const Countdown = (props: CountdownProps) => {
   }, 1000);
 
   return (
-    <div className={styles["countdown-div"]}>
-      <h2>{daysUntil ? `Days: ${daysUntil}` : ""}</h2>
-      <h2>{hoursUntil ? `Hours: ${hoursUntil}` : ""}</h2>
-      <h2>{minutesUntil ? `Minutes: ${minutesUntil}` : ""}</h2>
-      <h2>{secondsUntil ? `Seconds: ${secondsUntil}` : ""}</h2>
-    </div>
+    <>
+      <div>
+        <h1 className={styles["destination-header"]}>
+          Congratulations! You are going to {destination} in:{" "}
+        </h1>
+      </div>
+      <div className={styles["countdown-div"]}>
+        <h2>{daysUntil ? `Days: ${daysUntil}` : ""}</h2>
+        <h2>{hoursUntil ? `Hours: ${hoursUntil}` : ""}</h2>
+        <h2>{minutesUntil ? `Minutes: ${minutesUntil}` : ""}</h2>
+        <h2>{secondsUntil ? `Seconds: ${secondsUntil}` : ""}</h2>
+      </div>
+    </>
   );
 };
 
