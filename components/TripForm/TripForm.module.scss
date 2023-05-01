@@ -1,10 +1,40 @@
 .form-div {
-  width: 75%;
-  margin: 2rem auto;
+  width: 30%;
+  margin: auto;
+  border-radius: 5px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
+  background-color: rgba(220, 220, 220, 0.8);
 }
 
 .form-controls {
   margin: 1rem;
+}
+
+.default-trip {
+  background-image: url("../../public/TripBackgrounds/default-background.jpg");
+  background-size: cover;
+  height: 100vh;
+  padding: 2rem 0;
+}
+
+.tropical-paradise {
+  background-image: url("../../public/TripBackgrounds/tropical.jpeg");
+  background-size: cover;
+}
+
+.winter-wonderland {
+  background-image: url("../../public//TripBackgrounds/snowy.jpg");
+  background-size: cover;
+}
+
+.relaxing-retreat {
+  background-image: url("../../public/TripBackgrounds/relaxing.jpg");
+  background-size: cover;
+}
+
+.urban-adventure {
+  background-image: url("../../public/TripBackgrounds/city.jpg");
+  background-size: cover;
 }

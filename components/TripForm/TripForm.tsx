@@ -29,6 +29,7 @@ const TripForm = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(tripType);
     const trip: TripProps = {
       destination,
       startDate,
@@ -39,11 +40,11 @@ const TripForm = () => {
   };
 
   return (
-    <div className={styles[`${tripType}`]}>
+    <div className={trip ? styles[`${trip.tripType}`] : styles["default-trip"]}>
       {trip ? (
         <Countdown startDate={trip.startDate} destination={trip.destination} />
       ) : null}
-      <div className={styles["form-div"]}>
+      <div>
         <Box
           component="form"
           className={styles["form-div"]}
@@ -55,6 +56,7 @@ const TripForm = () => {
             <TextField
               label="Destination"
               required
+              type="text"
               InputLabelProps={{ shrink: true }}
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
@@ -88,13 +90,13 @@ const TripForm = () => {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setTripType(e.target.value)}
             >
-              <MenuItem value="tropcial-paradise">Tropical Paradise</MenuItem>
+              <MenuItem value="tropical-paradise">Tropical Paradise</MenuItem>
               <MenuItem value="winter-wonderland">Winter Wonderland</MenuItem>
               <MenuItem value="urban-adventure">Urban Adventure</MenuItem>
               <MenuItem value="relaxing-retreat">Relaxing Retreat</MenuItem>
             </TextField>
           </FormControl>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="outlined">
             Add Trip
           </Button>
         </Box>
